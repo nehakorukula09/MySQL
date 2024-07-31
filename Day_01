@@ -1,4 +1,4 @@
-Lab setup with Virtualisation
+Introduction and Lab setup with Virtualisation
 
 --> Create VMWAREware workstaion player
 Error: 522
@@ -6,4 +6,13 @@ Used Repository for download
 https://softwareupdate.vmware.com/cds/vmw-desktop/player
 
 --> Created VM with CentOS 9 with resources (2 Cores , 4 GB RAM & 50GB Disk space)
-[For Disk IOS install , Download from CENTOS main stream]
+Network Adapter : bridged (To enable internet connected to machine)
+[For Disk IOS install , Download from CENTOS main stream] - Takes around 40 mins
+
+--> Start the VM and complete installation of CentOS9. --> Takes around 15-20 mins
+--> Change Display accordingly.
+
+VM Management :
+Modify the Resources:
+-> Edit VMware settings and modify accordingly as needed.[Hardware and options]
+* Make sure VM is shut down while modifying the resources.

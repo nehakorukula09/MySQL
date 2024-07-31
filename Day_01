@@ -1,0 +1,9 @@
+Lab setup with Virtualisation
+
+--> Create VMWAREware workstaion player
+Error: 522
+Used Repository for download
+https://softwareupdate.vmware.com/cds/vmw-desktop/player
+
+--> Created VM with CentOS 9 with resources (2 Cores , 4 GB RAM & 50GB Disk space)
+[For Disk IOS install , Download from CENTOS main stream]

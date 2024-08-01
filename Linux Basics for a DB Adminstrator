@@ -1,0 +1,115 @@
+1. Directory Listing Attributes
+2. Creating files and directories in Linux
+3. Changing regular User and root password
+4. Command syntax and gettiing help
+5. File permissions
+6. Adding text to files.
+7. File maintenance commands
+8. File display commands
+9. Linux file editor
+10. Linux User account management
+11. Switch between users and sudo accounts
+12. System management commands
+13. Network files and commands in linux.
+14. Transfer files using scp
+15. System updates and repos (yum commands)
+16. Important things to remember in Linux
+
+------------------------------------------------
+Important things to remember in Linux:
+1. Linux has super user account called root [most powerful account/ can make changes to system config files]
+2. Linux is a case-sensitive system
+3. Avoid spaces while creating files and directories
+4. Linux Kernel is not an operating system. It is a small software within linux OS that takes commands from users and pass them to Hardware or peripherals.
+5. Linux is mostly CLI and not GUI.
+
+Linux Navigation commands: [Navigating File system]
+1. cd {change directory}
+2. pwd {present working directory}
+3. ls {list the contents}
+
+What is Root!!
+1. 3 types of root on linux system
+    1. Root account : Most powerful account
+    2. Root as / : Very first directoty in linux [Root directory]
+    3. Root home directory : /root
+
+Directory  Listing Attributes:
+ 1. drwxr-xr-x+  : directory
+ 2. -rwxr-xr-x   : file
+ 3. lrwxr-xr-x   : link
+ 4. type of file  no.of links  owner          user group  size  Created on   Name
+    drwxr-xr-x    5            nehakorukula   staff        160  Jul 14  2023 workspace
+
+Commands Syntax:
+command option(s) argument(s)
+Options: modify the way command works , consists of a hyphen/dash(-)  also multiple commands can be grouped toagther after (-).
+Arguments: most commands are used together with one or more arguments , commands assume default if none of the arguments are supplied.
+Eg: ls -ltr Music [ls : command , -ltr : option , Music : argument(directory/file)]
+HELP of a command : man <command>
+Eg: man ls
+Quit Help : Enter q
+
+Creating files and directories:
+1. touch : create an empty file
+Eg: touch <filename>
+2. cp   : copying existing file(file1) to a different file(file2)
+Eg: cp file1.txt file2.txt
+3. vi   : File Editor in Linux
+Eg: vi <filename> and enter the contents and exit using :wq!
+4. mkdir : create a directory
+Eg: mkdir <directory name>
+
+Changing Password:
+1. change password using command --> passwd userid [Only root can use this].
+2. If already connected as that user just use command -->passwd.
+
+File and Directory permissions:
+1. UNIX multi user system , Every file can be accessed by different users based on permissions.
+2. Permissions for a file are of 3 types:
+      1. r : read
+      2. w : write
+      3. x : execute
+3. Each permission can be controlled by 3 levels:
+      1. u : user 
+      2. g : group
+      3. o : other
+4. File / Directory permissions can be checked by running ls -l
+5. Command to change permission is 'chmod'.
+
+Eg : 
+-rw-r--r--    1 nehakorukula  staff      188 Oct 18  2023 file.txt
+User nehakorukula has only read and write permissions
+Group staff has only access to read
+others , all other users have only read permissions.
+===================
+Adding write permissions to group , adding execute to other and remove write permissions from user.
+chmod g+w file.txt
+chmod o+x file.txt
+chmod u-w file.txt
+-r--rw-r-x  1 nehakorukula  staff  188 Oct 18  2023 file.txt
+=====================
+Remove read permissions from all of them
+chmod a-r file.txt
+-----w---x  1 nehakorukula  staff  188 Oct 18  2023 file.txt
+=====================
+User to have all the permissions and group and other only read.
+chmod u+rwx file.txt     
+chmod g-w+r file.txt
+chmod o-x+r file.txt
+-rwxr--r--  1 nehakorukula  staff  188 Oct 18  2023 file.txt
+
+Help Commands:
+1. 3 types of help commands:
+    1. whatis command
+    2. command --help
+    3. man command
+Eg:
+whatis ls
+ls (1)               - list directory contents
+whatis pwd
+pwd (1)              - print name of current/working directory
+
+
+
+

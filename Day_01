@@ -16,3 +16,18 @@ VM Management :
 Modify the Resources:
 -> Edit VMware settings and modify accordingly as needed.[Hardware and options]
 * Make sure VM is shut down while modifying the resources.
+
+==============================================
+Brief History , Forks of MySQL and Cloud Computing
+MySQL installtion steps (prerequisites , distributio and versions etc)
+Download, Install , Configure MySQL
+Install MySQl Workbench
+Download and restore test database
+===============================================
+Brief History , Forks of MySQL and Cloud Computing
+Forks: certain related projects that can be considered the mini-versions of standard MySQL.
+-> A lot of work performed by forks is centered on Inno DB storage.
+===============================================
+MySQL installtion steps (prerequisites , distributio and versions etc)
+
+

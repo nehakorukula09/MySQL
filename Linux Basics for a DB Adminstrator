@@ -109,7 +109,175 @@ whatis ls
 ls (1)               - list directory contents
 whatis pwd
 pwd (1)              - print name of current/working directory
+==================
 
+Adding text to files (Redirects)
+
+3 ways to add tect to file
+1. vi -> file creation and adding text
+2. Redirect command output > or >>
+3. echo > or >>
+--> cat is a command to read contents of file.
+
+===================
+Pipes: (|)
+A pipe is used by the shell to connect the output of one command directly to the input of another command.
+command1 [arguments] | command2 [arguments]
+Eg : ls -ltr | grep *.txt
+Last line : ls -l | tail -1
+First line of a file : cat file.txt | head -1
+
+====================
+File maintenance commands:
+1. cp -> copy
+2. rm -> remove
+3. mv -> move / rename
+4. mkdir -> create directory
+5. rmdir -> remove directory [rm -r]
+6. chgrp -> permissions of group
+7. chown -> permissions of owner
+=====================
+File Display commands:
+
+cat -> display contents of file.
+more -> contents of file one page wise.
+less -> contents of page in reverse order alos one line at a time.
+head -> first few lines
+tail -> last few lines
+
+======================
+Linux file editor
+
+vi -> visual editor
+ed -> standard line editor
+ex -> extended line editor
+emacs -> A full screen editor
+pico -> Beginner's editor
+vim -> Advance version of vi.
+
+Common keys in vi:
+i -> insert
+esc -> Escape out of any mode
+r -> replace
+d -> delete
+:q! -> quit without saving
+:wq! -> quit and save
+=========================
+
+Users Account management
+useradd
+groupadd
+userdel
+groupdel
+usermod
+
+files:
+/etc/passwd
+/etc/group
+/etc/shadow
+
+Eg: useradd -g <groupname> -s /bin/bash -c "user description" -m -d <user home directory> <username>
+
+=====================
+Switch users and sudo access:
+su - username
+sudo command
+visudo
+file : /etc/sudoers
+=====================
+Process status:
+
+ps 
+Eg: ps -> shows the processes of current shell
+
+PID: Unique process id
+TTY : terminal type that the user logged in to
+TIME : amount of CPU in minutes and seconds that the process has been running
+CMD:  name of command
+
+Eg : 
+ps -e -> shows all running process
+ps aux -> shows all running process in BSD format
+ps -ef -> shows all running process in full format listing
+ps -u username --> shows all process running by a user
+
+top -> shows linux proceses and provides real time view of running system
+eg: top -> interactive mode , exit by q
+
+PID: show tasks unique process id
+USER : Username of owner of task
+PR : The PR field shows the scheduling priority of the process from the perspective of the kernel.
+NI : Responses of Nice value of task. A negative nice values implies higher priorit , postive value means lower priority.
+VIRT : Total virtual memory used by Task
+RES : memory consumed by the process in RAM
+SHR : Represents the amount of shared memory used by a task
+S : The field shows the process state in a single-letter form
+%CPU : Represents CPU percentage
+%MEM : shows memory usage of task
+TIME+ : CPU time , the same ad 'TIME', but reflecting more granularity through hundreths of a second.
+
+Eg : 
+top -u <username> [Processes running by a specific user]
+top then press c [shows commands absolute path]
+top then press k [kill a process by PID within top session]
+top then M and P [To sort all linux running processes by memory usage]
+
+TOP command refreshes the information every 3 seconds.
+=======================================
+crontab : scheduling tasks
+
+crontab -e  --> edit crontab
+crontab -l  --> list crontab entries
+crontab -r --> remove crontab
+crontab -r <entry number> specific entry removal in crontab 
+crond --> crontab daemo/service that manages scheduling
+systemctl status crond --> TO manage the crond service
+
+* * * * * <command to execute>
+minute [0-50] hour [0-23] day of month [1-31] month [1-12] day of the week [0-6 (sun to sat) 7 (also sunday on some systems)]
+
+=========================================
+Network Files and Commands
+Interface detection
+Assigning an IP address
+Interface configuration files
+1. /etc/nsswitch.conf -> Resolve hostname for IP address
+2. /etc/hosts -> define the IP with hostnames
+3. /etc/sysconfig/network -> specify the hostname and modify parameters until Centos6 and from Centos7 (/etc/hostname)
+4. /etc/sysconfig/network-scripts -> Mention IP  subnet , gateway etc
+5. /etc/resolv.conf -> Resolves DNS name to Ip address.
+
+Network commands:
+ping -> connectivity check for IP/DNS name
+ifconfig -> interface config
+ifup or ifdown -> make interface up / down
+netstat -> IP routing table
+tcpdump -> All the transactions in and out of the machine.
+
+=======================================
+SCP : secure copy protocol , similar to File transfer FTP butt with security and authentication
+FTP : File transfer protocol.
+
+protocol : set of rules to communicate by users
+Default SCP port : 22 (~ to SSH)
+========================================
+
+System Updates and Repos (Repositories)
+
+yum (CentOS) , apt-get (other linux)
+Cofiguration files locaton : /etc/yum/repos.d
+* Access to internet is needed
+
+RPM (Redhat package manager)
+-> Package is already downloaded and installs the package [At palces where there is no internet access]
+YUM
+-> Package is downloaded and installed.
+
+Eg:
+rpm -qa (query all) -> lists all installed packages
+yum install bind (Install DNS)
+rpm -ihv <location of rpm> -> install a package
+rpm -e <package name> -> removes the package
 
 
 

@@ -1,0 +1,192 @@
+Installation:
+
+[ec2-user@ip- ~]$ sudo dnf clean all
+[ec2-user@ip- ~]$ sudo dnf update
+
+Installs latest mysql vesion
+ sudo dnf install mysql mysql-server
+
+[ec2-user@ip- ~]$ mysql --version
+mysql  Ver 8.0.36 for Linux on x86_64 (Source distribution)
+[ec2-user@ip- ~]$ sudo systemctl start mysqld
+For auto restart while reboot of machine.
+[ec2-user@ip- ~]$ sudo systemctl enable mysqld
+Created symlink /etc/systemd/system/multi-user.target.wants/mysqld.service → /usr/lib/systemd/system/mysqld.service.
+
+Security check:
+sudo mysql_secure_installation
+
+1. VALIDATE PASSWORD COMPONENT can be used to test passwords
+and improve security. It checks the strength of password
+and allows the users to set only those passwords which are
+secure enough. Would you like to setup VALIDATE PASSWORD component?
+2. There are three levels of password validation policy:
+LOW    Length >= 8
+MEDIUM Length >= 8, numeric, mixed case, and special characters
+STRONG Length >= 8, numeric, mixed case, special characters and dictionary                  file
+Please set the password for root here.
+New password: 
+Re-enter new password: 
+Estimated strength of the password: 50 
+Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : Y
+
+3. By default, a MySQL installation has an anonymous user,
+allowing anyone to log into MySQL without having to have
+a user account created for them. This is intended only for
+testing, and to make the installation go a bit smoother.
+You should remove them before moving into a production
+environment.
+
+Remove anonymous users? (Press y|Y for Yes, any other key for No) : Y
+
+4. Normally, root should only be allowed to connect from
+'localhost'. This ensures that someone cannot guess at
+the root password from the network.
+
+Disallow root login remotely? (Press y|Y for Yes, any other key for No) : Y
+5. By default, MySQL comes with a database named 'test' that
+anyone can access. This is also intended only for testing,
+and should be removed before moving into a production
+environment.
+
+
+Remove test database and access to it? (Press y|Y for Yes, any other key for No) : 
+6. Reloading the privilege tables will ensure that all changes
+made so far will take effect immediately.
+
+Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
+==========================
+Login:
+mysql -h <hostname> -uroot -p(prompt password)
+Eg : mysql -uroot -p
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+List current databases:
+ --> show databases;
+Default databases:
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+Mysql : is case sensitive
+mysql> CREATE DATABASE nnk_test_mysqldb;
+Query OK, 1 row affected (0.01 sec)
+mysql> CREATE DATABASE Nnk_Test_Mysqldb;
+Query OK, 1 row affected (0.01 sec)
+
+Connect to Database:
+mysql> use nnk_test_mysqldb;
+Database changed
+
+======================================
+curl -sSLO https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
+[ec2-user@ip-172-31-92-190 ~]$ md5sum mysql84-community-release-el9-1.noarch.rpm
+15a20fea9018662224f354cb78b392e7  mysql84-community-release-el9-1.noarch.rpm
+
+======================================
+Installation of MySQL workbench : GUI
+
+-> Unified Visual Tool
+-> Provides data modelling , SQL development , Administration tools for server configuration , user administration , backup etc
+-> Available on Windows , Linux and Mac OS X.
+
+Benefits:
+--> Design , model , generate and manage databases., can create ER diagram.
+--> Development tool (Creating , executing and optimizing SQL queries)
+--> Administration purposes
+--> Visual Performance Dashboard
+--> Database Migration
+
+1. Install community version mysql
+sudo dnf -y install https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
+2. sudo dnf install mysql-workbench-community
+or 
+sudo dnf -y install https://dev.mysql.com/get/mysql-workbench-community-8.0.38-1.el9.x86_64.rpm
+Error: 
+ Problem: conflicting requests
+  - nothing provides libproj.so.22()(64bit) needed by mysql-workbench-community-8.0.38-1.el9.x86_64 from @commandline
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)
+Fix: 
+sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+Install snaps
+Snaps are applications packaged with all their dependencies to run on all popular Linux distributions from a single build. They update automatically and roll back gracefully.
+===============================
+sudo yum install epel-release
+Snap can now be installed as follows:
+sudo yum install snapd
+Once installed, the systemd unit that manages the main snap communication socket needs to be enabled:
+sudo systemctl enable --now snapd.socket
+To enable classic snap support, enter the following to create a symbolic link between /var/lib/snapd/snap and /snap:
+sudo ln -s /var/lib/snapd/snap /snap
+Either log out and back in again, or restart your system, to ensure snap’s paths are updated correctly.
+===============================
+sudo yum install snapd
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+[ec2-user@ip-~]$ sudo snap install mysql-workbench-community
+error: too early for operation, device not yet seeded or device model not acknowledged
+Restart the machine
+sudo snap install mysql-workbench-community
+===============================
+[ec2-user@ip-172-31-92-190 ~]$ sudo snap install mysql-workbench-community
+2024-08-13T20:24:46Z INFO Waiting for automatic snapd restart...
+mysql-workbench-community 8.0.36 from Tonin Bolzan (tonybolzan) installed
+=====================================================
+
+--> Installed MySQL bench in mac OS
+--> Connections 
+Connection -> Parameters [Hostname , port , username amd password (stor in keychain)]
+Remote Management -> SSH login based management [Hostname , port, username , SSH key path]
+Enable security groups to the EC2 instances.
+
+Error: Authentciation error
+nehakorukula@Nehas-MacBook-Pro Downloads % mysql -h 3.86.212.124 -u root -p
+Enter password: 
+ERROR 2003 (HY000): Can't connect to MySQL server on '3.86.212.124:3306' (61)
+
+BREW install of mysql:
+==> mysql
+Upgrading from MySQL <8.4 to MySQL >9.0 requires running MySQL 8.4 first:
+ - brew services stop mysql
+ - brew install mysql@8.4
+ - brew services start mysql@8.4
+ - brew services stop mysql@8.4
+ - brew services start mysql
+We've installed your MySQL database without a root password. To secure it run:
+    mysql_secure_installation
+MySQL is configured to only allow connections from localhost by default
+To connect run:
+    mysql -u root
+To start mysql now and restart at login:
+  brew services start mysql
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/mysql/bin/mysqld_safe --datadir\=/opt/homebrew/var/mysql
+
+nehakorukula@Nehas-MacBook-Pro Downloads % brew services info mysql
+mysql (homebrew.mxcl.mysql)
+Running: ✘
+Loaded: ✘
+Schedulable: ✘
+nehakorukula@Nehas-MacBook-Pro Downloads %  brew services start mysql
+==> Successfully started `mysql` (label: homebrew.mxcl.mysql)
+
+nehakorukula@Nehas-MacBook-Pro Downloads % mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 9.0.1 Homebrew
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+

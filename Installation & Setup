@@ -167,6 +167,13 @@ mysql> SELECT host FROM mysql.user WHERE User = 'root';
 +-----------+
 2 rows in set (0.00 sec)
 
+Query :
+use mysql;
+show databases;
+SELECT CURRENT_USER();
+select * from mysql.user;
+==================================================
+MAC installation:
 BREW install of mysql:
 ==> mysql
 Upgrading from MySQL <8.4 to MySQL >9.0 requires running MySQL 8.4 first:

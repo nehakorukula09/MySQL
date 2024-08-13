@@ -28,6 +28,43 @@ Brief History , Forks of MySQL and Cloud Computing
 Forks: certain related projects that can be considered the mini-versions of standard MySQL.
 -> A lot of work performed by forks is centered on Inno DB storage.
 ===============================================
-MySQL installtion steps (prerequisites , distributio and versions etc)
+MySQL installtion steps (prerequisites , distribution and versions etc)
+
+Prerequisites:
+1. MySQL compatible with Operating system
+2. Choosing distrbution
+3. Download and install the distribution
+4. Perform any necessary post installation steps
+
+MySQL 5.7 and MySQL 8.0 are most common used versions in prod systems.
+
+Distribution:
+1. pre-packaged distributions containing binary programs or source code
+2. Use Binary distribution
+3. Decide to install 
+development release[Newest features / Not recommended for prod usage] 
+or 
+General Availability(GA) release [thoruoghly tested and stable]
+
+mysql-8.0.1-dmr
+8 - major version number
+0 - minor version number
+1 - release series version number
+dmr (development milestone release) [Milestone model] - each model with a few tested features.
+rc - Release candidate - stable release
+Development stages : DMR releases -> RC releases -> GA status releases.
+
+Distribution formats:
+Binary --> precompiled , ready to run programs that are available for Enterprise and Community MySQL server versions.
+       --> These binaries are official oracle - tested versions.
+Source --> Are not guaranteed to be a onsistent with commercial code updates , nor include oracle support.
+
+Downloads:
+https://dev.mysql.com/downloads/
+Integrity check :
+1. MD5 checksums
+2. GNUPC Privacy card (Cryptographic sugnature)
+3. for RPM packages , built in RPM integrity verification mechanism.
+
 
 

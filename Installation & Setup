@@ -147,6 +147,7 @@ Error: Authentciation error
 nehakorukula@Nehas-MacBook-Pro Downloads % mysql -h 3.86.212.124 -u root -p
 Enter password: 
 ERROR 2003 (HY000): Can't connect to MySQL server on '3.86.212.124:3306' (61)
+"Remote connections needs to be enabled."
 
 BREW install of mysql:
 ==> mysql

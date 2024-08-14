@@ -1,2 +1,10 @@
 https://dev.mysql.com/doc/index-other.html
 curl -sSLO https://downloads.mysql.com/docs/sakila-db.zip
+ unzip sakila-db.zip 
+[ec2-user@ip-172-31-92-190 ~]$ cd sakila-db/
+[ec2-user@ip-172-31-92-190 sakila-db]$ ls -l
+total 3340
+-rw-r--r--. 1 ec2-user ec2-user 3351749 Jul 31 22:05 sakila-data.sql
+-rw-r--r--. 1 ec2-user ec2-user   40093 Jul 31 22:05 sakila.mwb
+-rw-r--r--. 1 ec2-user ec2-user   24269 Jul 31 22:05 sakila-schema.sql
+

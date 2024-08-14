@@ -8,3 +8,6 @@ total 3340
 -rw-r--r--. 1 ec2-user ec2-user   40093 Jul 31 22:05 sakila.mwb
 -rw-r--r--. 1 ec2-user ec2-user   24269 Jul 31 22:05 sakila-schema.sql
 
+From MYSQL workbench 
+--> Schemas
+--> Open SQL and Run the sql file.

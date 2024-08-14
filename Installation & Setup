@@ -135,6 +135,10 @@ sudo snap install mysql-workbench-community
 [ec2-user@ip-172-31-92-190 ~]$ sudo snap install mysql-workbench-community
 2024-08-13T20:24:46Z INFO Waiting for automatic snapd restart...
 mysql-workbench-community 8.0.36 from Tonin Bolzan (tonybolzan) installed
+
+FYI !!
+[ec2-user@ip-172-31-92-190 lib]$ sudo snap remove  mysql-workbench-community
+mysql-workbench-community removed
 =====================================================
 
 --> Installed MySQL bench in mac OS

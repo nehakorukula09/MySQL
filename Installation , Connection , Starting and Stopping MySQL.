@@ -1,0 +1,16 @@
+Installation , Connection , Starting and Stopping MySQL.
+
+1. Determine whether MySQL runs and is supported on selected platform.
+    https://www.mysql.com/support/supportedplatforms/database.html
+2. Choose distribution and version to install.
+    https://dev.mysql.com/doc/refman/5.7/en/which-version.html
+3. Download the ditribution needs to be installed and Verify the integrity.
+    https://dev.mysql.com/doc/refman/5.7/en/getting-mysql.html
+    https://dev.mysql.com/doc/refman/5.7/en/verifying-package-integrity.html
+4. Install the distribution from Binary/Source code.
+    https://dev.mysql.com/doc/refman/5.7/en/binary-installation.html
+    https://dev.mysql.com/doc/refman/5.7/en/source-installation.html
+5. Perform postinstallation setup secure initial MySQL account.
+    https://dev.mysql.com/doc/refman/5.7/en/postinstallation.html
+    https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html
+    

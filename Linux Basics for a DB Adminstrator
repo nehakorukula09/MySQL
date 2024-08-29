@@ -279,5 +279,15 @@ yum install bind (Install DNS)
 rpm -ihv <location of rpm> -> install a package
 rpm -e <package name> -> removes the package
 
+=================
+ubuntu@ip-172-31-93-114:/var/lib/postgresql$ tree .
+.
+├── 15
+│   └── main  [error opening dir]
+├── 16
+│   ├── main  [error opening dir]
+│   └── neha_test  [error opening dir]
+└── neha_test  [error opening dir]
+
 
 

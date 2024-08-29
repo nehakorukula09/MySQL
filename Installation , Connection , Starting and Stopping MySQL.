@@ -13,4 +13,23 @@ Installation , Connection , Starting and Stopping MySQL.
 5. Perform postinstallation setup secure initial MySQL account.
     https://dev.mysql.com/doc/refman/5.7/en/postinstallation.html
     https://dev.mysql.com/doc/refman/5.7/en/default-privileges.html
-    
+
+=========================================================
+Installing MySQL from Downloading packages:
+ On RPM systems:
+    rpm -ivh package.rpm
+ On APT systems:
+    dpkg -i packagename.deb
+
+Identify and resolve dependencies when installing packages
+--> Install any dependencies before installing MySQL packages
+--> Install MySQL packages in correct order [libs package before client or server installation]
+
+
+MySQL RPM installation files for Linux:
+1. RPM installation performs the following tasks:
+    a. Extracts RPM files to their default locations
+    b. Registers SysV init or systemd startup scripts
+    c. Setsup the mysql user and group in operating system
+        -> MySQL server process runs as a mysql user.
+2.  When starting the mysql service either by ""

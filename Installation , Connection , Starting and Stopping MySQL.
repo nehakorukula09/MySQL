@@ -32,4 +32,148 @@ MySQL RPM installation files for Linux:
     b. Registers SysV init or systemd startup scripts
     c. Setsup the mysql user and group in operating system
         -> MySQL server process runs as a mysql user.
-2.  When starting the mysql service either by ""
+2.  When starting the mysql service either by "service mysqld start" or "systemctl start mysqld"
+    a. Creates Data directory and the default my.cnf file. [These files are owned by mysql user and group]
+    b. Creates a default root@localhost account.
+    c. Setup random temp password for root account amd writes password to error log file. (/var/log/mysqld.log)
+        -> change password before using MySQL.
+
+MySQL DEB installation:
+1. DEB packages are available for APT linux systems either individually or bundled.
+2. For Standard installation , install packages in specified order:
+    a. Database common files package
+    b. Client packages
+    c. Client metapackage
+    d. server package
+    e. server metapackage
+
+sudo dpkg -i mysql-{common, community-client, client , community-server , server}_*.deb
+--> When installing server package , dpkg provides a configuration interface.
+    --> choose a password for root account.
+    --> Indicate if test db needs to be installed.
+
+Linux Distribution - Specific Repositories:
+1. Hosted on a web or local file system
+2. Accessed by using package managers.
+    a. Repository website is specified in a package manager configuration on each host.
+    b. Download individual packages manually.
+3. Contain software packages and their dependencies.
+4. Supplemented by additional repositories that contain software not contained in standard package repositories.
+
+Installing MySQL by using package manager:
+
+RPM bases packages [Oracle Linux , Red Hat , Fedora , CentOS]
+yum install
+APT bases systems [Ubuntu , Debian]
+apt-get install
+
+Eg : yum install mysql-community-server
+     yum install mysql-workbench
+** Installing mysql-community-server packages also installs the packages the server requires.
+
+Adding a Yum Repository
+1. Download Yum repository RPM file.
+    a. Choose the correct RPM for your distribution based on version of OS.
+2. Install the file using yum localinstall
+3. Enable or disable specific versions
+    -> MySQL 8.0 is enabled by default. Other versions are disabled.
+    -> /etc/yum.repos.d.mysql-community-repo file., change enabled to 1 to enable any repo [Eg :mysql5.7-community repo].
+4. use yum install packagename to install package from the new repo.
+
+Adding a APT repository
+1. Download APT repo DEB file.
+    a. Choose supported distributions.
+2. Install the file using dpkg command.
+    eg : dpkg -i mysql-apt-config_$version_all.deb
+3. Configure repo versions.
+4. Run apt-get update to refresh repo metadata.
+5. Run apt-get install packagename to install a package from the new repo.
+
+Enable or disable specific versions
+/etc/apt/sources.list.d/mysql.list [comment or uncomment specific version to disable or enable accordingly.]
+
+Installing MySQL on Windows:
+MySQL installer:
+    -> Distributed as an .msi executable.
+    -> guides through configuration wizard.
+Download full or web installers:
+1. FULL : contains all installation files in the downloaded file.
+2. WEB : cointains only the installer. [Installer downloads additional required files based on your selections during installation process.]
+** Follow installr screens to select products and complete installation.
+[License agreement , Setup installation type , Installation process , Post-install configuration]
+
+Noinstall Archive:
+    -> Distributed as a .zip file
+    -> Must be unpacked and moved to desired installation location.
+    -> Must be manually configured to create folders and configuration required to run MySQL.
+
+Installing MySQL as a windows service:
+1. With MySQL installer [Use the provided servie name or select an alternative]
+2. At the command line after installation:
+    a. Install service manually:
+    mysqld.exe --install servicename --defaults-file="C:\my.ini"
+    b. Remove an installed service:
+    mysqld.exe --remove servicename
+3. View the installed services by using the services control panel application.
+    -> Launch from command line :
+    services.msc
+4. Set the services to start automatically or manually and provide a windows account with which to start a service.
+
+Install MySQL from source:
+1. Configure compiled-in options
+    eg: Disabling unused features on production servers with well-understood use cases to maximise performance.
+        Enabling additional debugging features.
+2. Run MySQL on platform for which there are no precompiled binaries.
+3. Add you own modifications( or comunity patches) to MySQL.
+
+Installing MySQL from Binary archive:
+1. Create user(mysql) and group.
+    groupadd mysql
+    useradd -r -g mysql -s /bin/false mysql
+2. Extract the archive to suitable directory while logged in as mysql.
+    Alternatively change the ownership of the extracted archve to mysql after extracting it.
+    mkdir /usr/lov/mysql-$version
+    chwon mysql:mysql /usr/local/mysql-$version
+    cd /usr/loca/mysql-$version
+    tar -xf ~/mysql-$version-linux-glibc2*****.tar.gz
+3. Create the initial configuration file
+    -> copy my-default.cnf to /etc/my.cnf
+    -> Edit the datadir setting to point to data directory.
+    -> Edit the basedir setting to point to installation directory.
+    -> Edit ant other required settings: [log file settings or port etc]
+4. Initialise the data directory and note the generated temp password.
+    bin/mysqld --initialize --user=mysql
+5. Start MySQL server
+    bin/mysqld_safe --user=mysql & 
+6. Connect to MySQL server using temp password.
+    mysql -u root -p 
+7. Change the root user password
+    ALTER USER USER() IDENTIFIED by "paassword";
+8. Optionally , populate the time zone tables.
+    --> mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql -q
+
+
+Deploying MySQL server with Docker
+1. Need to install the Docker enginer and client on your host machine first.
+2. Download MySQL server Docker image
+    -> using the MySQL community edition image , 
+        -> Log in Docker hub and pull the image using docker command.
+            [docker pull mysql/mysql-server]
+    -> Using MySQL Enterprise edition image ,
+        -> Log into MySQL oracle support and download the image.
+        -> Load the imade using docker command.
+            [docker load -i mysql-enterprise-server-version.tar]
+3. List all downloaded images [docker images]
+4. Create a MySQL server docker container
+    docker run --name=mysql1 -d mysql/mysql-server
+5. view MySQL server logs:
+    docker logs mysql1
+    -> Retrieve generated temporary password
+    docker logs mysql1 2>&1 | grep GENERATED
+6. Connect to MySQL server from within the container
+    docker exeec -it mysql1 mysql -uroot -p
+    --> Enter temp password
+    --> change the root user password [ALTER USER USER() IDENTIFIED by 'new password';]
+
+
+

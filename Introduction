@@ -66,5 +66,39 @@ Integrity check :
 2. GNUPC Privacy card (Cryptographic sugnature)
 3. for RPM packages , built in RPM integrity verification mechanism.
 
+==================================================================================
+MySQL Programs:
+
+Server programs:
+       --> mysqld server process
+       --> servie utilities , launcher programs
+Installation programs:
+       --> Praograms that perform the initial configuration process
+Utility programs:
+       --> MySQL Programs that perform some function without connecting to the server.
+Client programs:
+       --> Programs that connect to the server.
+
+mysqld: [MySQL Server Process]
+-> Launched automatically by on eo fthe server helper programs [Including operating system stratup scripts]
+-> Launched manually to debug the MySQL server configuration
+Eg : mysqd --user=mysql --datatdir=/var/lib/mysql --socket=/tmp/mysql.sock
+[Error messages go to terminal by default rather than to the error log.]
+
+
+Installation Programs:
+-> mysql_secure_installation: Security program that enabled initial secure configuration.
+-> mysql_tzinfo_to_sql: Utility that creates a SQL script containing the host's time zone information.
+-> mysql_upgrade: 
+       --> Program that verifies database contents and ensures that they are compatible with current version of MySQl.
+       --> Deprecated since MySQL server 8.0.16 where the tasks are performed automatically when the server starts up.
+
+Utility Programs:
+-> mysql_config_editor: Manages the login paths to simplify how you connect command-line clients to the MySQL server
+-> mysqlbinlog:
+
+
+
+
 
 

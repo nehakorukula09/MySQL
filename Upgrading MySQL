@@ -1,0 +1,51 @@
+Upgrading MySQL:
+
+1. The easiest upgrade is between minor versions within the same series. [Eg : 8.0.xx to 8.0.yy]
+2. Also can upgrade from MySQL 5.7 to 8.0
+    -> Only bwteen General Availability (GA) releases. MySQL 5.7.9 or later.
+    -> Oracle recommends upgrading to the latest 5.7GA release before upgrading to MySQL 8.0
+3. Be aware of differences between the versions so that you can choose the correct upgrade method 
+  (in-place or logical) and avoid compatibility problems.
+4. Even if you are performing an in-place upgrade , you should backup your data beforehand.
+    -> This enables to rollback the upgrade if encountering problems.
+
+NOTE : Before upgrade , view changes between your existing version and target version.
+-> Known Issues , Incompatible change , Functionality added or changed , Important change.
+
+MySQL shell upgrade checker utility
+
+The util.checkForServerUpgrade() function:
+-> Is available in MySQL shell.
+-> Enables you to verify whether MySQL server instances are ready for upgrade.
+-> Checks for compstibility errors and issues for upgrade to MySQL 8.0
+-> Supports only MySQL server 5.7 and 8.0 Geneal Availability (GA) releases
+-> Chcks configuration file (my.cnf or my.ini) if you provide the file path.
+
+** The version of MySQL shell must be same or later than the version of MySQL server to upgrading version.
+Eg :
+mysqlsh --util.checkForServerUpgrade user@localhost:3306 --target-version=8.0.18 --config-path=/etc/mysql/my.cnf
+
+Using In-place Upgrade Method: [Recommended method to upgrade from MySQL 5.7 to 8.0]
+Use the in-place(physical) upgrade method when upgrading within a series  or from one major version to next.
+1. Stop MySQL server process.
+2. Use file copy to backup the current databases.(recommended)
+3. Replace the mysqld binary with the new version.
+4. Prioir to MySQL 8.0.1 , must run mysql_upgrade. in MYSQL 8.0.16 and higher, serve restart will perform all the upgrade tasks automatically.
+
+Uisng Logical Upgrade Method:
+Use the logical (backup/restore) upgrade method when upgrading to one or more later major versions.
+1. Use mysqldump to backup current databases.
+2. Install and initialize a new MySQL server.
+3. Start the new MySQl server.
+4. Restore the backed-up databases from the dump file. [may result in errors due to incompatibilities introduced by new , changed , deprecated or removed features and capabilities]
+5. Prior to MySQL 8.0.16 , must upgrade mysql_upgrade.
+    In MySQL 8.0.16 and higher , shutdwn the server and restart it with --upgrade=FORCE option to perform remaining upgrade tasks.
+
+
+mysql_upgrade
+--> Checks all tables in your databases for incompatibilities with current version of MySQL server.
+--> Repairs any problems found in tables with possible incompatibiliies.
+--> Upgrades system tables to add any new privileges or capabilities that are available in the new version.
+--> Marks all checked and repaired tables with the current MySQL version number.
+--> Not required for MySQL server 8..0.16 or later. [server will perform all the upgrade processess during startup.]
+** A new option --upgrade is introduced in 8.0.16 to control the upgrade process.

@@ -171,9 +171,71 @@ Deploying MySQL server with Docker
     -> Retrieve generated temporary password
     docker logs mysql1 2>&1 | grep GENERATED
 6. Connect to MySQL server from within the container
-    docker exeec -it mysql1 mysql -uroot -p
+    docker exec -it mysql1 mysql -uroot -p
     --> Enter temp password
     --> change the root user password [ALTER USER USER() IDENTIFIED by 'new password';]
+
+======================
+Starting and Stopping MySQL
+
+Methods of starting MySQL:
+1. Run the mysqld binary directly.
+2. Run mysqld_safe
+3. Use the Linux service manager
+    -> Run service mysqld start on SysVInit systems.
+    -> Run systelctl start mysqld on systemd.
+
+Methods of stopping MySQL:
+1. Kill the mysqld binary with a SIGHTERM signal (-15) [Kill mysqld_safe first if its is running]
+2. Use the Linux service manager
+    -> Run service mysqld stop on SysVInit systems.
+    -> Run systelctl stop mysqld on systemd.
+3. mysqladmin shutdown
+4. SQL SHUTDOWN statement
+5. Stopping MySQL with mysqladmin
+    -> Using the [client] login path : mysqladmin shutdown
+    -> using the [admin] login path : mysqladmin --login-path=admin shutdown
+    -> Providing credentials and server connections at the command line: 
+        mysqladmin -u root -p -h dbhost -P 3306 shutdown
+
+MySQL Service Files:
+1. On SysVInit systems , copy the mysql.server script to /etc/init.d/mysqld.
+    -> Some package installers create this files automatically.
+    -> Call it with start, stop or restart options.
+    -> Eg : service mysqld start
+            /etc/init.d/mysqld restart
+            support-files/mysql.server stop
+2. When you install MySQL from an RPM package built for systemd distributions or if you have configured systemd manually , use the systemctl command:
+    -> systemctl start mysqld
+    -> systemctl stop mysqld
+    -> This uses mysqld.service file , which is systemd service uint configuration file.
+
+Starting and Stopping MySQL on Windows:
+
+-> Run the server process directly. [mysqld.exe]
+-> If you have installed MySQL as a windows service:
+    -> An automatic service starts when Windows starts
+    -> Start and Stop services manually from the services control panel application. [Launched from the Start Menu or with the servies.msc command]
+    -> Start and Stop services manually from the command line with the net or sc commands:
+        net start servicename
+        sc start servicename
+        net stop servicename
+        sc stop servicename
+MySQL Notifier:
+-> Installed by MySQL installer
+-> Automatically registers MySQL services on the local machine.
+-> Enables registration of remote MySQL services.
+-> Displays the running status of registered servers.
+    -> Displayed in system tray.
+    -> Optionally, notifies when a registered server changes status or when MySQL Notifier detects a new local MySQL service.
+-> Enables starting , restarting and stopping registered servers.
+-> Launches installed MySQL applications:
+    -> MySQL Workbench
+    -> MySQL Utilities
+    -> MySQL Installer
+
+
+
 
 
 

@@ -67,6 +67,8 @@ Integrity check :
 3. for RPM packages , built in RPM integrity verification mechanism.
 
 ==================================================================================
+Linux MySQL Server Installation Directories:
+
 MySQL Programs:
 
 Server programs:
@@ -95,7 +97,133 @@ Installation Programs:
 
 Utility Programs:
 -> mysql_config_editor: Manages the login paths to simplify how you connect command-line clients to the MySQL server
--> mysqlbinlog:
+----------> Use mysql_config_editor to create encrypted option files.
+       1. Store user, password , and host options in a dedicated option file:
+       -> .mylogin.cnf in the current user's home directory.
+       -> To specify an alternative file name, set the MYSQL_TST_LOGIN_FILE environment variable.
+
+       2. The .mylogin.cnf file contains login paths.
+       -> They are similar to option groups.
+       -> Each login path contains authentication information for a single identity.
+       -> Clients refer to alogin path with the --login-path (or -L) command line option:
+              mysql --login-path=admin
+       -> Protect the file from being read by other users. Anyone who can read the file can use the credentials and is able to obtain the plain text passwords.
+       -> The decrypted .mylogin.cnf file consists of option groups. [similar to other option files.]
+       -> Each other group in .mylogin.cnf is a login path.
+              [A set of values indicating the server host and the credentials for authenticating with that server , permits only a limited set of options (User, password and host)]
+       Eg:
+              [admin]
+              user = root
+              password = oracle
+              host = 127.0.0.1
+       3. Login Paths:
+       -> To create a login path:
+              mysql_config_editor set --login-path=login-path --user=username --password --host=hostname
+       -> To view a single login path in clear text:
+              mysql_config_editor print --login-path=login-path
+       -> To view all login paths in clear text:
+              mysql_config_editor print --all
+       -> To remove a login path:
+              mysql_config_editor remove --login-path=login-path
+       -> The default login path name is [client]. It is read by all standard clients.
+
+-> mysqlbinlog: Reads and replays the contents of the binary log.
+-> mysqldumpslow: Reads and summarizes the contents of the slow query log.
+-> mysql_ssl_rsa_setup: Creates TLS keys and certificates.
+-> ibd2sdi: Extraxts serialized dictionary information (SDI) from InnoDB tablespace files.
+
+Command-line Client Programs:
+1. mysql : MySQL command-line client.
+2. mysqladmin : Utility of monitoring , administering and shutting down MySQL.
+3. mysqldump/mysqlpump : Backup utilities that create SQL scripts to restore the structure and contents of dbs.
+4. mysqlimport : Utility for importing the contents of delimited data files.
+5. mysqlslap : Load emulation client.
+6. mysqlshow : Utility for displaying database object metadata.
+7. mysqlcheck : Utility for checking and optimizing tables.
+8. mysqlsh : MySQL shell is an advanced command-line client and code editor for MySQL server.
+
+Launching command-line client programs:
+1. Clients support many common options:
+       Authentication and connectivity options [Eg : --user , --password , --host , --socket]
+2. Some options are specific to each client:
+       - mysqladmin example options: [--relative , --sleep]
+       - mysqlcheck eg options [--analyze , --check , --check-upgrade]
+
+
+Initial Configuration:
+
+Configuraing Mandatory Access Control
+Some platforms implement Mandatory Access Control (MAC) systems that :
+       -> Prevent services from accessing unauthorized resources , such as files or ports
+       [The default configuration includes default file and port access for common services including MySQL.]
+       -> Can be configured to enable specific nondefault access.
+       -> Can be disabled entirely.
+       -> Include : [Linux MaC systems : {SELinux : Oracle Linux , RHEL , Fedora , CentOS}{AppAromor : SUSE, Ubuntu}]
+                    [ Oracle Solaris Extended Policy]
+
+SELinux Example:
+1. Add new ports mapping:
+-> Set a range of TCP ports : 33060(X Protocol) , 33061 (Group Replication) , 33062 (admin port) to the mysqld_port_t type so that MySQL can use them:
+semanage port -a -t mysqld_port_t -p tcp 33060-33062
+2. Add a new file context type mapping:
+-> Set the /datadir  directory and its contents to the mysql_db_t type so that MySQL can access them:
+semanage fcontext -a -t mysqld_db_t "/datadir(/.*)?"
+restorecon -Rv /datadir
+restorecon reset /datadir context
+
+AppArmor Example:
+1. Edit the /etc/apparmor.d/local/usr.sbin.mysqld file to change the MySQL policy on this machine:
+-> Set the /datadir directory and its contents to be accessible.
+       /datadir/** rwk,
+2. Reload Apparmor profiles:
+       servie apparmor reload
+3. Set the MySQL policy to complain mode
+       aa-complain /usr/sbin/mysqld
+4. Setting the MySQL policy to enforce mode
+       aa-enforce /usr/sbin/mysqld
+
+Changing the root password:
+       --> RPM installations create a root account with an initial random expired password, which you must change before using. (Written to the server log usually in /var/log/mysql/mysqld.log)
+       --> Interactive DEB installation prompt for an initial root password that does not need to be changed.
+       --> Installation provided by ither maintainers might create an initial root password in some other way.
+       --> Any initial random expired password is generated when MySQL is initialized using mysqld --initialize. Source and archive installations usually use this method.
+Login to MySQL with initial password and Use the ALTER USER statement to change it:
+mysql --user=root --password
+ALTER USER USER() IDENTIFIED BY 'password';
+
+Using mysqladmin to change root password:
+Use the mysqladmin client utility with the password command to change the password.
+-> If you do not provide an argument to the password command, mysqladmin prompts for the new password:
+mysqladmin --user=root --password password
+-> If you provide either old or new password on command line , mysqladmin displays a warning(Using a password on the command line interface can be insecure.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

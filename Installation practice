@@ -1,3 +1,5 @@
+Ubuntu 24.04 LTS (GNU/Linux 6.8.0-1012-aws x86_64)
+
 Binary package download from https://edelivery.oracle.com/osdc/faces/SoftwareDelivery.
 https://dev.mysql.com/doc/mysql-secure-deployment-guide/5.7/en/secure-deployment-download.html
 
@@ -20,13 +22,183 @@ my_print_defaults  myisamlog      mysql_config  mysql_secure_installation  mysql
 
 Add /usr/local/mysql/bin to the root user’s executable search path by adding the
 line export PATH=$PATH:/usr/local/mysql/bin to the .bashrc file.
-ubuntu@ip-172-31-91-36:~$ vi .bashrc
+ubuntu@ip-172-31-91-36:~$ sudo vi /etc/bash.bashrc 
 export PATH=$PATH:/usr/local/mysql/bin
 esc:wq
-ubuntu@ip-172-31-91-36:~$ source ~/.bashrc
+ubuntu@ip-172-31-91-36:~$ source /etc/bash.bashrc
 
 
+ubuntu@ip-172-31-91-36:~$ sudo groupadd mysql
+ubuntu@ip-172-31-91-36:~$ sudo useradd -r -g mysql -s /bin/false mysql
+
+ubuntu@ip-172-31-91-36:/usr/local/mysql/bin$ mysqld --initialize
+mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+
+ubuntu@ip-172-31-91-36:~$ sudo apt-get install libaio
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package libaio
+
+ubuntu@ip-172-31-91-36:~$ sudo apt search libaio
+Sorting... Done
+Full Text Search... Done
+libaio-dev/noble 0.3.113-6build1 amd64
+  Linux kernel AIO access library - development files
+
+libaio1t64/noble,now 0.3.113-6build1 amd64 [installed,automatic]
+  Linux kernel AIO access library - shared library
+
+ubuntu@ip-172-31-91-36:~$ curl -O http://launchpadlibrarian.net/646633572/libaio1_0.3.113-4_amd64.deb
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  6520  100  6520    0     0  27708      0 --:--:-- --:--:-- --:--:-- 27744
+ubuntu@ip-172-31-91-36:~$ sudo dpkg -i libaio1_0.3.113-4_amd64.deb
+Selecting previously unselected package libaio1:amd64.
+(Reading database ... 100037 files and directories currently installed.)
+Preparing to unpack libaio1_0.3.113-4_amd64.deb ...
+Unpacking libaio1:amd64 (0.3.113-4) ...
+Setting up libaio1:amd64 (0.3.113-4) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.3) ...
+
+root@ip-172-31-91-36:~# mysqld --initialize --user=mysql
+2024-09-03T00:38:29.657257Z 0 [System] [MY-015017] [Server] MySQL Server Initialization - start.
+2024-09-03T00:38:29.658821Z 0 [System] [MY-013169] [Server] /opt/mysql-commercial-8.4.2-linux-glibc2.17-x86_64/bin/mysqld (mysqld 8.4.2-commercial) initializing of server in progress as process 70094
+2024-09-03T00:38:29.684043Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2024-09-03T00:38:30.594931Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2024-09-03T00:38:33.244869Z 6 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: ?t__0w.I<%Vp
+2024-09-03T00:38:36.687274Z 0 [System] [MY-015018] [Server] MySQL Server Initialization - end.
+
+root@ip-172-31-91-36:~# mkdir /var/run/mysqld
+root@ip-172-31-91-36:~# chown mysql:mysql /var/run/mysqld/
+root@ip-172-31-91-36:~# mysqld_safe &
+[1] 70233
+root@ip-172-31-91-36:~# Logging to '/usr/local/mysql/data/ip-172-31-91-36.err'.
+2024-09-03T00:44:53.628929Z mysqld_safe Starting mysqld daemon with databases from /usr/local/mysql/data
+
+root@ip-172-31-91-36:~# mysql -uroot -p
+mysql: error while loading shared libraries: libncurses.so.5: cannot open shared object file: No such file or directory
+
+root@ip-172-31-91-36:~# dpkg -i libncurses5_6.4-2_amd64.deb
+Selecting previously unselected package libncurses5:amd64.
+(Reading database ... 100042 files and directories currently installed.)
+Preparing to unpack libncurses5_6.4-2_amd64.deb ...
+Unpacking libncurses5:amd64 (6.4-2) ...
+dpkg: dependency problems prevent configuration of libncurses5:amd64:
+ libncurses5:amd64 depends on libtinfo5 (= 6.4-2); however:
+  Package libtinfo5 is not installed.
+
+dpkg: error processing package libncurses5:amd64 (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for libc-bin (2.39-0ubuntu8.3) ...
+Errors were encountered while processing:
+ libncurses5:amd64
+
+root@ip-172-31-91-36:~# curl -O http://launchpadlibrarian.net/648013231/libtinfo5_6.4-2_amd64.deb 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 97662  100 97662    0     0   239k      0 --:--:-- --:--:-- --:--:--  239k
+root@ip-172-31-91-36:~# sudo dpkg -i libtinfo5_6.4-2_amd64.deb
+Selecting previously unselected package libtinfo5:amd64.
+(Reading database ... 100051 files and directories currently installed.)
+Preparing to unpack libtinfo5_6.4-2_amd64.deb ...
+Unpacking libtinfo5:amd64 (6.4-2) ...
+Setting up libtinfo5:amd64 (6.4-2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.3) ...
+
+root@ip-172-31-91-36:~# dpkg -i libncurses5_6.4-2_amd64.deb
+(Reading database ... 100058 files and directories currently installed.)
+Preparing to unpack libncurses5_6.4-2_amd64.deb ...
+Unpacking libncurses5:amd64 (6.4-2) over (6.4-2) ...
+Setting up libncurses5:amd64 (6.4-2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.3) ...
+
+root@ip-172-31-91-36:~# mysql -uroot -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.4.2-commercial
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+
+================================
+Change database to mysql:
+mysql> use mysql;
+No connection. Trying to reconnect...
+Connection id:    9
+Current database: *** NONE ***
+
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+mysql> ALTER USER USER() IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+root@ip-172-31-91-36:/usr/local/mysql/bin# mysqlshow --user=root -p
+Enter password: 
++--------------------+
+|     Databases      |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+
+================================
+
+Configuring MySQL service:
+
+root@ip-172-31-91-36:~# mysqladmin -uroot -p shutdown
+Enter password: 
+2024-09-03T00:55:41.984458Z mysqld_safe mysqld from pid file /usr/local/mysql/data/ip-172-31-91-36.pid ended
+[1]+  Done                    mysqld_safe
+
+root@ip-172-31-91-36:~# ln -s /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+
+root@ip-172-31-91-36:/etc/init.d# /etc/init.d/mysql status
+ * MySQL is not running
+root@ip-172-31-91-36:/etc/init.d# /etc/init.d/mysql start
+Starting MySQL
+.. * 
+
+root@ip-172-31-91-36:/etc/init.d# update-rc.d mysql defaults 
+root@ip-172-31-91-36:/etc/init.d# systemctl enable mysql
+mysql.service is not a native service, redirecting to systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable mysql
+
+root@ip-172-31-91-36:/etc/init.d# systemctl restart mysql
+root@ip-172-31-91-36:/etc/init.d# systemctl status mysql
+● mysql.service - LSB: start and stop MySQL
+     Loaded: loaded (/etc/init.d/mysql; generated)
+     Active: active (running) since Tue 2024-09-03 01:14:16 UTC; 2s ago
+       Docs: man:systemd-sysv-generator(8)
+    Process: 71439 ExecStart=/etc/init.d/mysql start (code=exited, status=0/SUCCESS)
+      Tasks: 36 (limit: 1130)
+     Memory: 424.9M (peak: 441.7M)
+        CPU: 843ms
+     CGroup: /system.slice/mysql.service
+             ├─71447 /bin/sh /usr/local/mysql/bin/mysqld_safe --datadir=/usr/local/mysql/data --pid-file=/usr/local/mysql/data/ip-172-31-91-36.pid
+             └─71533 /usr/local/mysql/bin/mysqld --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --plugin-dir=/usr/local/mysql/lib/plugin --user=mysql --log-erro>
+
+Sep 03 01:14:14 ip-172-31-91-36 systemd[1]: Starting mysql.service - LSB: start and stop MySQL...
+Sep 03 01:14:14 ip-172-31-91-36 mysql[71439]: Starting MySQL
+Sep 03 01:14:16 ip-172-31-91-36 mysql[71439]: .. *
+Sep 03 01:14:16 ip-172-31-91-36 systemd[1]: Started mysql.service - LSB: start and stop MySQL.
 
 
-
-
+root@ip-172-31-91-36:~# mysqladmin -uroot -p status
+Enter password: 
+Uptime: 43  Threads: 2  Questions: 2  Slow queries: 0  Opens: 119  Flush tables: 3  Open tables: 38  Queries per second avg: 0.046

@@ -1,0 +1,32 @@
+Binary package download from https://edelivery.oracle.com/osdc/faces/SoftwareDelivery.
+https://dev.mysql.com/doc/mysql-secure-deployment-guide/5.7/en/secure-deployment-download.html
+
+Installation of 8.4 version:
+https://edelivery.oracle.com/osdc/faces/SoftwareDelivery
+--> Releases --> MySQL server --> Linux 64-bit and download V*****.zip file.
+
+nehakorukula@Nehas-MacBook-Pro Downloads % scp -i "nnk_pgsql-2.pem" V1044480-01/mysql-commercial-8.4.2-linux-glibc2.17-x86_64.tar.xz ubuntu@44.202.135.229:/tmp
+mysql-commercial-8.4.2-linux-glibc2.17-x86_64.tar.xz   
+100%  508MB  10.5MB/s   00:48
+ubuntu@ip-172-31-91-36:/opt$ sudo tar -xf /tmp/mysql-commercial-8.4.2-linux-glibc2.17-x86_64.tar.xz 
+ubuntu@ip-172-31-91-36:/opt$ sudo ln -s /opt/mysql* /usr/local/mysql
+When you install a new version of MySQL in the practice titled “Upgrading MySQL”, 
+you can replace this symbolic link with a link to the new version’s directory without overwriting the existing version’s directory.
+
+ubuntu@ip-172-31-91-36:~$ ls /usr/local/mysql/bin/
+ibd2sdi            myisam_ftdump  myisampack    mysql_config_editor        mysql_tzinfo_to_sql  mysqlbinlog  mysqld-debug  mysqldump      mysqlshow
+innochecksum       myisamchk      mysql         mysql_migrate_keyring      mysqladmin           mysqlcheck   mysqld_multi  mysqldumpslow  mysqlslap
+my_print_defaults  myisamlog      mysql_config  mysql_secure_installation  mysqlbackup          mysqld       mysqld_safe   mysqlimport    perror
+
+Add /usr/local/mysql/bin to the root user’s executable search path by adding the
+line export PATH=$PATH:/usr/local/mysql/bin to the .bashrc file.
+ubuntu@ip-172-31-91-36:~$ vi .bashrc
+export PATH=$PATH:/usr/local/mysql/bin
+esc:wq
+ubuntu@ip-172-31-91-36:~$ source ~/.bashrc
+
+
+
+
+
+

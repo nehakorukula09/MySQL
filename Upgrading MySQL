@@ -50,21 +50,6 @@ mysql_upgrade
 --> Not required for MySQL server 8..0.16 or later. [server will perform all the upgrade processess during startup.]
 ** A new option --upgrade is introduced in 8.0.16 to control the upgrade process.
 
-===============================================
-nehakorukula@Nehas-MacBook-Pro Downloads % scp -i "nnk_pgsql-2.pem" V1044383-01/mysql-commercial-9.0.1-linux-glibc2.28-x86_64.tar.xz ubuntu@44.202.135.229:/tmp
-mysql-commercial-9.0.1-linux-glibc2.28-x86_64.tar.xz                                         100%  590MB   8.2MB/s   01:12  
-
-root@ip-172-31-91-36:~# cd /opt
-root@ip-172-31-91-36:/opt# tar xf /tmp/mysql-commercial-9.0.1-linux-glibc2.28-x86_64.tar.xz 
-root@ip-172-31-91-36:/opt# ls /opt
-mysql-commercial-8.4.2-linux-glibc2.17-x86_64  mysql-commercial-9.0.1-linux-glibc2.28-x86_64
-
-root@ip-172-31-91-36:/opt# ls -l /usr/local/mysql
-lrwxrwxrwx 1 root root 50 Sep  3 00:06 /usr/local/mysql -> /opt/mysql-commercial-8.4.2-linux-glibc2.17-x86_64
-root@ip-172-31-91-36:/opt# rm /usr/local/mysql
-root@ip-172-31-91-36:/opt# ln -s /opt/mysql-commercial-9.0.1-linux-glibc2.28-x86_64/ /usr/local/mysql
-
-root@ip-172-31-91-36:/usr/local/mysql# mysqladmin -uroot -p shutdown
-Enter password: 
+=============================================== 
 
 

@@ -64,6 +64,7 @@ lrwxrwxrwx 1 root root 50 Sep  3 00:06 /usr/local/mysql -> /opt/mysql-commercial
 root@ip-172-31-91-36:/opt# rm /usr/local/mysql
 root@ip-172-31-91-36:/opt# ln -s /opt/mysql-commercial-9.0.1-linux-glibc2.28-x86_64/ /usr/local/mysql
 
-
+root@ip-172-31-91-36:/usr/local/mysql# mysqladmin -uroot -p shutdown
+Enter password: 
 
 

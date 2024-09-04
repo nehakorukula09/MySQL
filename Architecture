@@ -1,0 +1,59 @@
+Architectural components
+1. MySQL server process
+2. Client programs connecting locally or remotely.
+3. Other MySQL programs (not clients) installed locally.
+
+--> Client programs connect to MySQL server process to make data requests.
+
+Client-Server connectivity:
+Is not limited to environments where all computers run the same OS.
+Client programs can connect to the server running on the same host or diff host.
+
+MySQL server processess:
+1. mysqld
+2. Runs as a single process that is multithreaded.
+3. Manages access to dbs on disk and in memory.
+4. Supports simultaneous client connections.
+5. Supports multiple storage engines.
+6. Supports both transactional and non-transactional tables.
+7. Optimizes memory usage by using caches and buffers.
+
+Host : Physical machine or virtual machine on which server program runs , which includes hardware configuration , OS and its N/W addr.
+MySQL server Software : A software program (mysqld) with a version number and a list of features.
+MySQL server Instance : A mysqld server process that manages data directory containing one or more schemas.
+                        [Multiple instances can run on a single host]
+
+Applications
+|
+Connection Layer [Connection protocols , Threads , Authentication]
+|
+SQL Layer
+|
+Storage Layer
+
+Connection Layer [Connection protocols , Threads , Authentication]
+Classic protocols and X protocols
+--> MySQL classic protocol , MySQL X Protocol introduced in MySQL .7.12 and enabled by default in MySQL 8.0.
+TCP/IP protocol -> local/remote connections -> Supports classic and X protocol -> Works on all OS.
+Socket file -> Local connections -> Supports classic and X protocol -> UNIX-derived OS including Linux , BSD, Mac OS X.
+Shared memory -> local connections -> classic protocol -> Windows OS
+Named pipes -> local connections -> classic protocal -> Windows OS
+
+Local and Remote Connection protocol :
+TCP/IP (Transmission control protocol/Internet Protocol):
+-> Uses IP addresses or DNS host name to identify hosts.
+-> Uses TCP port numbers to identify specific services on each host.
+-> MySQL default TCP port number:
+  1. 3306 -> MySQL Classic Protocol (port)
+  2. 33060 -> MySQL X protocol (mysqlx_port)
+  3. 33062 -> Administrative connection using MySQL Classic protocol(admin_port).
+-> Enables connections between different hosts.
+For default port connection:
+Eg : mysql --host=<hostname> --user=<username> --password
+For using alternative port:
+Eg : mysql -h <host/ip> -P 3312 -uroot -p
+
+Local Connection Protocol in Linux : Socket
+-> 
+
+

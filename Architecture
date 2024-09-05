@@ -56,4 +56,3 @@ Eg : mysql -h <host/ip> -P 3312 -uroot -p
 Local Connection Protocol in Linux : Socket
 -> 
 
-

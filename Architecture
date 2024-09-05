@@ -54,5 +54,6 @@ For using alternative port:
 Eg : mysql -h <host/ip> -P 3312 -uroot -p
 
 Local Connection Protocol in Linux : Socket
--> 
+-> Interprocess communication used to form one end of a bidirectional communication link between 2  processes on the same machine.
+
 
